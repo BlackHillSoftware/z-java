@@ -1,0 +1,1 @@
+mvn install:install-file -Dfile=./ibmjzos.jar -DgroupId=com.ibm.jzos -DartifactId=ibmjzos -Dversion=2.4.8 -Dpackaging=jar
