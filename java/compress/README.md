@@ -31,4 +31,55 @@ Compression and CPU performance was compared to Gzip and TERSE compressing a fil
 |TERSE (PACK)  |     53s |        0  |       53s |    45%         |
 |TERSE (SPACK) |    124s |        0  |      124s |    23%         |
 
+## JCL ##
 
+This JCL uses the [JAVAC and JAVAG PROCs included with the project](../../JCL)
+
+### Compile ###
+
+```
+//JOBNAME  JOB CLASS=A, 
+//             MSGCLASS=H,
+//             NOTIFY=&SYSUID    
+//*
+//JAVAC    EXEC JAVAC,                          
+// JAVACLS='com/blackhillsoftware/zos/Compress',
+// SRCPATH='z-java/java/compress/src/main/java',
+// TGTPATH='z-java/java/compress/target',
+// JAVACOPT='-Xlint -verbose'
+```
+### Run (Compress) ###
+
+```
+//JOBNAME  JOB CLASS=A,
+//             MSGCLASS=H,
+//             NOTIFY=&SYSUID 
+//*               
+//JAVAG   EXEC JAVAG,          
+// JAVACLS='com/blackhillsoftware/zos/Compress',
+// TGTPATH='z-java/java/compress/target'
+//G.INPUT    DD  DISP=SHR,DSN=HLQ.SMF.RECORDS(0)
+//G.OUTPUT   DD DISP=(NEW,CATLG), 
+//     DSN=HLQ.SMF.DATA.GZ,  
+//     SPACE=(TRK,(1000,1000),RLSE),
+//     LRECL=80,BLKSIZE=27920,RECFM=FB, 
+//     UNIT=SYSDA
+```
+### Run (Uncompress) ###
+
+```
+//JOBNAME  JOB CLASS=A, 
+//             MSGCLASS=H,
+//             NOTIFY=&SYSUID 
+//*
+//JAVAG   EXEC JAVAG,
+// JAVACLS='com/blackhillsoftware/zos/Compress',
+// TGTPATH='z-java/java/compress/target',
+// ARGS='-d'
+//G.INPUT    DD  DISP=SHR,DSN=HLQ.SMF.DATA.GZ
+//G.OUTPUT   DD DISP=(NEW,CATLG),
+//     DSN=HLQ.SMF.DATA,
+//     SPACE=(TRK,(1000,1000),RLSE),
+//     LRECL=32760,BLKSIZE=0,RECFM=VBS, 
+//     UNIT=SYSDA 
+```
