@@ -10,4 +10,35 @@ CLASSPATH.
  
 Therefore it is important that this class does not depend on any 
 classes other than the JRE itself, including inner or anonymous 
-classes.  
+classes.
+
+## JCL ##
+
+This JCL uses the [JAVAC and JAVAG PROCs included with the project](../../JCL)
+
+### Compile ###
+
+```
+//JOBNAME  JOB CLASS=A,
+//             MSGCLASS=H,
+//             NOTIFY=&SYSUID 
+//*
+//JAVAC    EXEC JAVAC,
+// JAVACLS='ShowClassPath',
+// SRCPATH='z-java/java/show-classpath/src/main/java',
+// TGTPATH='java/target',
+// JAVACOPT='-Xlint -verbose'
+```
+
+### Run ###
+
+```
+//JOBNAME  JOB CLASS=A,
+//             MSGCLASS=H,
+//             NOTIFY=&SYSUID
+//*
+//JAVAG   EXEC JAVAG,
+// JAVACLS='ShowClassPath',
+// TGTPATH='/u/userid/java/target',
+// CLASPATH='java/lib/*' 
+```

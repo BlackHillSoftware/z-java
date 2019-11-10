@@ -45,7 +45,7 @@ This JCL uses the [JAVAC and JAVAG PROCs included with the project](../../JCL)
 //JAVAC    EXEC JAVAC,                          
 // JAVACLS='com/blackhillsoftware/zos/Compress',
 // SRCPATH='z-java/java/compress/src/main/java',
-// TGTPATH='z-java/java/compress/target',
+// TGTPATH='java/target',
 // JAVACOPT='-Xlint -verbose'
 ```
 ### Run (Compress) ###
@@ -57,7 +57,7 @@ This JCL uses the [JAVAC and JAVAG PROCs included with the project](../../JCL)
 //*               
 //JAVAG   EXEC JAVAG,          
 // JAVACLS='com/blackhillsoftware/zos/Compress',
-// TGTPATH='z-java/java/compress/target'
+// TGTPATH='java/target'
 //G.INPUT    DD  DISP=SHR,DSN=HLQ.SMF.RECORDS(0)
 //G.OUTPUT   DD DISP=(NEW,CATLG), 
 //     DSN=HLQ.SMF.DATA.GZ,  
@@ -74,7 +74,7 @@ This JCL uses the [JAVAC and JAVAG PROCs included with the project](../../JCL)
 //*
 //JAVAG   EXEC JAVAG,
 // JAVACLS='com/blackhillsoftware/zos/Compress',
-// TGTPATH='z-java/java/compress/target',
+// TGTPATH='java/target',
 // ARGS='-d'
 //G.INPUT    DD  DISP=SHR,DSN=HLQ.SMF.DATA.GZ
 //G.OUTPUT   DD DISP=(NEW,CATLG),
