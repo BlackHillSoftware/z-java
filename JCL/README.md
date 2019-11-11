@@ -28,9 +28,30 @@ Unfortunately, the STDENV syntax for JZOS is different to the STDENV syntax for 
 
 ## Examples ##
 
-### Compile a Java Class File ###
+### Run a Jar File ###
 
-This JCL compiles a Java file.
+```
+//JOBNAME  JOB CLASS=A, 
+//             MSGCLASS=H,
+//             NOTIFY=&SYSUID 
+//*
+//JAVAG   EXEC JAVAG,
+// JAVACLS='-jar java/compress-1.0.0.jar',
+// ARGS='-d'
+//INPUT    DD  DISP=SHR,DSN=HLQ.SMF.DATA.GZ
+//OUTPUT   DD DISP=(NEW,CATLG),
+//     DSN=HLQ.SMF.DATA,
+//     SPACE=(TRK,(1000,1000),RLSE),
+//     LRECL=32760,BLKSIZE=0,RECFM=VBS, 
+//     UNIT=SYSDA 
+```
+
+This JCL runs a jar file located in the **java** directory under the user's home directory. **-d** is passed as a command line argument to the Java program.
+
+The Java program runs under the JZOS Batch Launcher so the **INPUT** and **OUTPUT** DDs in the JCL are available to the program.
+
+
+### Compile a Java File ###
 
 ```
 //JOBNAME JOB CLASS=A,
@@ -44,7 +65,7 @@ This JCL compiles a Java file.
 // CLASPATH='java/lib/javax.mail-1.6.2.jar',
 // CLASPAT2='java/lib/activation-1.1.jar'
 ```     
-The path name does not begin with a "/" which means the path is relative to the user's home directory. If the user's home directory is /u/userid, the file to be compiled is:
+This JCL compiles a Java file. The path names do not begin with a "/" which means the paths are relative to the user's home directory. If the user's home directory is /u/userid, the file to be compiled is:
 ```
 /u/userid/z-java/java/z-mail/src/main/java/com/blackhillsoftware/zos/ZMail.java
 ```
@@ -59,7 +80,7 @@ again relative to the home directory.
 When running this class, the classpath must be set to "java/target" and the class specified as **com.blackhillsoftware.zos.ZMail** or **com/blackhillsoftware/zos/ZMail**.
 
 
-### Run Java Class File ###
+### Run a Java Class File ###
 
 This JCL runs the compiled Java class file created by the previous sample. DD statements define the input for the program.
 
@@ -89,7 +110,7 @@ Last Message Line
 //
 ```
 
-### Compile and Run Java Class File ###
+### Compile and Run a Java Class File ###
 
 This JCL combines the previous 2 examples. As a variation, a wildcard is used in the CLASSPATH instead of multiple CLASPATH entries.  
 

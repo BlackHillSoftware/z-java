@@ -28,6 +28,10 @@ The software is dependent on the following jars:
 
 The Maven build copies them to the target/lib directory. The executable jar built from this sample expects to find them in the ./lib subdirectory relative to the jar location.
 
+## JCL ##
+
+This JCL uses the [JAVAC and JAVAG PROCs included with this repository](../../JCL)
+
 ### Run Jar File ###
 
 ```
