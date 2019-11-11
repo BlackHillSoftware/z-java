@@ -30,15 +30,7 @@ Unfortunately, the STDENV syntax for JZOS is different to the STDENV syntax for 
 
 ### Compile a Java Class File ###
 
-This JCL compiles a Java file. The path name does not begin with a "/" which means the path is relative to the user's home directory. If the user's home directory is /u/userid, the file to be compiled is:
-```
-/u/userid/z-java/java/z-mail/src/main/java/com/blackhillsoftware/zos/ZMail.java
-```
-relative to the user's home directory. (This is the file location you end up with when the git repository is cloned to /u/userid/z-java.)
-
-The class file is output to java/target/com/blackhillsoftware/zos/ZMail.class, again relative to the home directory.
-
-When running this class, the classpath must be set to "java/target" and the class specified as com.blackhillsoftware.zos.ZMail or com/blackhillsoftware/zos/ZMail.
+This JCL compiles a Java file.
 
 ```
 //JOBNAME JOB CLASS=A,
@@ -52,6 +44,20 @@ When running this class, the classpath must be set to "java/target" and the clas
 // CLASPATH='java/lib/javax.mail-1.6.2.jar',
 // CLASPAT2='java/lib/activation-1.1.jar'
 ```     
+The path name does not begin with a "/" which means the path is relative to the user's home directory. If the user's home directory is /u/userid, the file to be compiled is:
+```
+/u/userid/z-java/java/z-mail/src/main/java/com/blackhillsoftware/zos/ZMail.java
+```
+relative to the user's home directory. (This is the file location you end up with when the git repository is cloned to /u/userid/z-java.)
+
+The class file is output to:
+```
+java/target/com/blackhillsoftware/zos/ZMail.class
+```
+again relative to the home directory.
+
+When running this class, the classpath must be set to "java/target" and the class specified as **com.blackhillsoftware.zos.ZMail** or **com/blackhillsoftware/zos/ZMail**.
+
 
 ### Run Java Class File ###
 
