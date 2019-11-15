@@ -4,17 +4,15 @@
 //  LOGLVL='',
 //  REGSIZE='0M',
 //  LEPARM='',
-//* Parameters for instream data need triple quotes
-//* to preserve quotes in the SET statement
-//  SRCPATH='''java/src''',
-//  TGTPATH='''java/target''',
-//  CLASPATH='''''',
+//  SRCPATH='java/src',
+//  TGTPATH='java/target',
+//  CLASPATH='',
 //* Additional CLASPAT* entries allow CLASSPATH to
 //* be extended with less JCL continuation issues.
-//  CLASPAT2='''''',
-//  CLASPAT3='''''',
-//  CLASPAT4='''''',
-//  CLASPAT5=''''''
+//  CLASPAT2='',
+//  CLASPAT3='',
+//  CLASPAT4='',
+//  CLASPAT5=''
 //*
 //SYMBOLS  EXPORT SYMLIST=(JAVACOPT,
 //     SRCPATH,
@@ -26,14 +24,15 @@
 //     CLASPAT5,
 //     JAVACLS)
 //*
-//         SET JAVACLS=&JAVACLS
-//         SET SRCPATH=&SRCPATH
-//         SET TGTPATH=&TGTPATH
-//         SET CLASPATH=&CLASPATH
-//         SET CLASPAT2=&CLASPAT2
-//         SET CLASPAT3=&CLASPAT3
-//         SET CLASPAT4=&CLASPAT4
-//         SET CLASPAT5=&CLASPAT5
+//         SET QT=''''
+//         SET JAVACLS=&QT&JAVACLS&QT
+//         SET SRCPATH=&QT&SRCPATH&QT
+//         SET TGTPATH=&QT&TGTPATH&QT
+//         SET CLASPATH=&QT&CLASPATH&QT
+//         SET CLASPAT2=&QT&CLASPAT2&QT
+//         SET CLASPAT3=&QT&CLASPAT3&QT
+//         SET CLASPAT4=&QT&CLASPAT4&QT
+//         SET CLASPAT5=&QT&CLASPAT5&QT
 //*
 //G        EXEC PGM=JVMLDM80,REGION=&REGSIZE,
 //   PARM='&LEPARM/&LOGLVL &JAVACLS &ARGS'
