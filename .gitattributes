@@ -1,0 +1,4 @@
+*.md zos-working-tree-encoding=ibm-1047 git-encoding=iso8859-1
+*.jcl zos-working-tree-encoding=ibm-1047 git-encoding=iso8859-1
+*.java zos-working-tree-encoding=ibm-1047 git-encoding=iso8859-1
+*.xml zos-working-tree-encoding=ibm-1047 git-encoding=iso8859-1

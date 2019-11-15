@@ -1,7 +1,5 @@
 ## Compress ##
 
-Compress and uncompress z/OS sequential datasets to and from gzip format.
-
 This sample provides a simple program for compressing and uncompressing z/OS datasets using gzip format. This program is designed to operate on z/OS datasets using JCL, rather than files stored in the Unix filesystem.
 
 The gzip format data is in stream of bytes format and so can be transferred to and from other systems using binary transfer without data loss.
@@ -14,11 +12,11 @@ Fixed and variable length records are supported. Variable length records have th
 
 Data is stored in binary format i.e. no translation between EBCDIC and ASCII/UTF8 etc. is attempted.
 
-The compressed data on z/OS will typically be stored in a FB dataset with any convenient LRECL. The last record will be padded as required, the extra data is ignored by gzip. 
+The compressed data on z/OS can be stored in a FB dataset with any convenient LRECL. The last record will be padded as required, the extra data is ignored by gzip. 
 
-Data can be uncompressed on non-z/OS systems, and processed if they understand the z/OS data records.
+Data can be uncompressed on non-z/OS systems, and processed by programs that understand the z/OS data records.
 
-Likewise, data can be written in z/OS format i.e. fixed length records (without delimiters) or variable length records with RDW on a non-z/OS system, compressed, transferred and uncompressed into a z/OS sequential dataset.
+Likewise, data can be written in z/OS format on a non-z/OS system i.e. fixed length records (without delimiters) or variable length records including RDW, compressed, transferred and uncompressed into a z/OS sequential dataset.
 
 ### Performance ###
 
@@ -31,4 +29,88 @@ Compression and CPU performance was compared to Gzip and TERSE compressing a fil
 |TERSE (PACK)  |     53s |        0  |       53s |    45%         |
 |TERSE (SPACK) |    124s |        0  |      124s |    23%         |
 
+## JCL ##
 
+This JCL uses the [JAVAC and JAVAG PROCs included with this repository](../../JCL)
+
+### Run Jar File (Compress) ###
+
+```
+//JOBNAME  JOB CLASS=A,
+//             MSGCLASS=H,
+//             NOTIFY=&SYSUID 
+//*               
+//JAVAG   EXEC JAVAG,          
+// JAVACLS='-jar java/compress-1.0.0.jar',
+//INPUT    DD  DISP=SHR,DSN=HLQ.SMF.RECORDS(0)
+//OUTPUT   DD DISP=(NEW,CATLG), 
+//     DSN=HLQ.SMF.DATA.GZ,  
+//     SPACE=(TRK,(1000,1000),RLSE),
+//     LRECL=80,BLKSIZE=27920,RECFM=FB, 
+//     UNIT=SYSDA
+```
+### Run Jar File (Uncompress) ###
+
+```
+//JOBNAME  JOB CLASS=A, 
+//             MSGCLASS=H,
+//             NOTIFY=&SYSUID 
+//*
+//JAVAG   EXEC JAVAG,
+// JAVACLS='-jar java/compress-1.0.0.jar',
+// ARGS='-d'
+//INPUT    DD  DISP=SHR,DSN=HLQ.SMF.DATA.GZ
+//OUTPUT   DD DISP=(NEW,CATLG),
+//     DSN=HLQ.SMF.DATA,
+//     SPACE=(TRK,(1000,1000),RLSE),
+//     LRECL=32760,BLKSIZE=0,RECFM=VBS, 
+//     UNIT=SYSDA 
+```
+
+### Compile Class File ###
+
+```
+//JOBNAME  JOB CLASS=A, 
+//             MSGCLASS=H,
+//             NOTIFY=&SYSUID    
+//*
+//JAVAC    EXEC JAVAC,                          
+// JAVACLS='com/blackhillsoftware/zos/Compress',
+// SRCPATH='z-java/java/compress/src/main/java',
+// TGTPATH='java/target'
+```
+### Run Class File (Compress) ###
+
+```
+//JOBNAME  JOB CLASS=A,
+//             MSGCLASS=H,
+//             NOTIFY=&SYSUID 
+//*               
+//JAVAG   EXEC JAVAG,          
+// JAVACLS='com/blackhillsoftware/zos/Compress',
+// TGTPATH='java/target'
+//INPUT    DD  DISP=SHR,DSN=HLQ.SMF.RECORDS(0)
+//OUTPUT   DD DISP=(NEW,CATLG), 
+//     DSN=HLQ.SMF.DATA.GZ,  
+//     SPACE=(TRK,(1000,1000),RLSE),
+//     LRECL=80,BLKSIZE=27920,RECFM=FB, 
+//     UNIT=SYSDA
+```
+### Run Class File (Uncompress) ###
+
+```
+//JOBNAME  JOB CLASS=A, 
+//             MSGCLASS=H,
+//             NOTIFY=&SYSUID 
+//*
+//JAVAG   EXEC JAVAG,
+// JAVACLS='com/blackhillsoftware/zos/Compress',
+// TGTPATH='java/target',
+// ARGS='-d'
+//INPUT    DD  DISP=SHR,DSN=HLQ.SMF.DATA.GZ
+//OUTPUT   DD DISP=(NEW,CATLG),
+//     DSN=HLQ.SMF.DATA,
+//     SPACE=(TRK,(1000,1000),RLSE),
+//     LRECL=32760,BLKSIZE=0,RECFM=VBS, 
+//     UNIT=SYSDA 
+```
