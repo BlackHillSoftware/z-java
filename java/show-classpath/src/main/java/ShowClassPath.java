@@ -14,8 +14,6 @@ import java.net.URLClassLoader;
  * classes other than the JRE itself, including inner or anonymous 
  * classes.  
  * 
- * @author Andrew Rowley
- *
  */
 
 public class ShowClassPath 
@@ -32,5 +30,10 @@ public class ShowClassPath
        {
         	System.out.format("%s%n", url.getFile());
        }
+       
+       String libPathProperty = System.getProperty("java.library.path");
+	   System.out.println("java.library.path value:");
+       System.out.println(libPathProperty);
+       
    }
 }
