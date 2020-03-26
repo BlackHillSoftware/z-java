@@ -9,6 +9,8 @@ Sample z/OS Java programs.
 
 - **[compress](./java/compress)**
 Compress and decompress z/OS sequential datasets using gzip compatible compression. Data can be decompressed on other systems using gzip and processed by programs that understand the z/OS record formats. Likewise, programs on other systems can write z/OS compatible records, compress the data using gzip and it can be uncompressed to a z/OS dataset.
+- **[catalog](./java/catalog)**
+Samples demonstrating use of the **com.ibm.jzos.CatalogSearch** class to use the z/OS Catalog Search Interface from Java. 
 - **[show-classpath](./java/show-classpath)**
 A simple program to help diagnose classpath programs. It displays the CLASSPATH environment variable, and the resolved CLASSPATH entries from the class loader.
 - **[z-mail](./java/z-mail)**
