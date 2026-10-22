@@ -44,7 +44,7 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<mainClass>com.blackhillsoftware.zos.Compress</mainClass>
+							<mainClass>HttpsTest</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
