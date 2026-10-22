@@ -14,7 +14,7 @@ public class HttpsTest
         System.out.println("Testing HTTPS connection to: " + urlString);
         
         try {
-            URL url = URI.create(urlString).toURL();
+            URL url = new URL(urlString);
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
             
             // Set reasonable timeouts
