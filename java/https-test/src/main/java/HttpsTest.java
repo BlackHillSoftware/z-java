@@ -29,7 +29,7 @@ public class HttpsTest
             System.out.println("\nConnection Successful!");
             System.out.println("HTTP Response Code: " + responseCode);
 
-            // Capture certs before reading the body — closing the stream
+            // Capture certs before reading the body - closing the stream
             // can leave HttpsURLConnection in a state where this fails
             Certificate[] certs = connection.getServerCertificates();
 
